@@ -497,7 +497,7 @@
 
   <!-- Bottom bar -->
   <footer class="bottom-bar">
-    <span class="bottom-copy">© 2025 Goldie's Goodness Outpost</span>
+    <span class="bottom-copy">© <span id="year"></span> Goldie's Goodness Outpost</span>
     <nav class="social-links">
       <a href="https://www.instagram.com/goldiesoutpost/" target="_blank" rel="noopener">Instagram</a>
     </nav>
@@ -619,6 +619,7 @@
         msg.style.animation = 'fadeUp 0.6s ease both';
       }, 370);
     }
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 
 </body>
