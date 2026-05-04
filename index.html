@@ -4,6 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Goldie's Goodness Outpost — Coming Soon</title>
+  <meta name="description" content="A new kind of outpost. Coffee, provisions, and culture. Coming soon.">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://splendorous-frangollo-7e40d8.netlify.app/">
+  <meta property="og:title"       content="Goldie's Goodness Outpost — Coming Soon">
+  <meta property="og:description" content="A new kind of outpost. Coffee, provisions, and culture.">
+  <meta property="og:image"       content="https://splendorous-frangollo-7e40d8.netlify.app/og.png">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter / iMessage -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Goldie's Goodness Outpost — Coming Soon">
+  <meta name="twitter:description" content="A new kind of outpost. Coffee, provisions, and culture.">
+  <meta name="twitter:image"       content="https://splendorous-frangollo-7e40d8.netlify.app/og.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -242,60 +262,100 @@
     /* ─────────── FORM ─────────── */
     .form-wrap {
       width: 100%;
-      max-width: 370px;
+      max-width: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
       animation: fadeUp 1s ease both 1.0s;
+    }
+
+    /* Initial CTA button */
+    .cta-btn {
+      border: 1px solid rgba(212,168,64,0.38);
+      background: rgba(212,168,64,0.10);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      padding: 16px 44px;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: background 0.3s, border-color 0.3s, transform 0.15s;
+      outline: none;
+    }
+    .cta-btn:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #18130A;
+    }
+    .cta-btn:active { transform: scale(0.97); }
+
+    /* Expanding form panel */
+    .form-reveal {
+      width: 100%;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.55s cubic-bezier(0.22,1,0.36,1), opacity 0.4s ease;
+    }
+    .form-reveal.open {
+      max-height: 200px;
+      opacity: 1;
     }
 
     .form {
       display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 2px;
+    }
+
+    .form input {
+      width: 100%;
       border: 1px solid rgba(212,168,64,0.28);
       border-radius: 60px;
-      overflow: hidden;
       background: rgba(255,255,255,0.07);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    .form:focus-within {
-      border-color: rgba(212,168,64,0.55);
-      box-shadow: 0 0 0 4px rgba(212,168,64,0.10);
-    }
-
-    .form input[type="email"] {
-      flex: 1;
-      border: none;
       outline: none;
-      background: transparent;
-      padding: 16px 22px;
+      padding: 15px 22px;
       font-family: 'Inter', sans-serif;
       font-size: 12.5px;
       font-weight: 300;
       letter-spacing: 0.03em;
       color: var(--cream);
-      min-width: 0;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .form input:focus {
+      border-color: rgba(212,168,64,0.55);
+      box-shadow: 0 0 0 4px rgba(212,168,64,0.08);
     }
     .form input::placeholder { color: rgba(245,237,218,0.32); }
 
-    .form button {
-      flex-shrink: 0;
+    .form .submit-btn {
+      width: 100%;
       border: none;
       outline: none;
       cursor: pointer;
       background: var(--gold);
       color: #18130A;
       font-family: 'Inter', sans-serif;
-      font-size: 9px;
+      font-size: 10px;
       font-weight: 600;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      padding: 16px 24px;
+      padding: 15px 24px;
       border-radius: 60px;
-      margin: 4px;
       transition: background 0.3s, transform 0.15s;
-      white-space: nowrap;
+      margin-top: 2px;
     }
-    .form button:hover  { background: var(--gold-lt); }
-    .form button:active { transform: scale(0.97); }
+    .form .submit-btn:hover  { background: var(--gold-lt); }
+    .form .submit-btn:active { transform: scale(0.97); }
 
     /* ─────────── SUCCESS ─────────── */
     .success {
@@ -419,10 +479,16 @@
     </div>
 
     <div class="form-wrap">
-      <form class="form" id="notify-form" onsubmit="handleSubmit(event)" novalidate>
-        <input type="email" placeholder="Your email address" required autocomplete="email">
-        <button type="submit">Notify Me</button>
-      </form>
+      <button class="cta-btn" id="cta-btn" onclick="showForm()">Get Notified</button>
+
+      <div class="form-reveal" id="form-reveal">
+        <form class="form" id="notify-form" onsubmit="handleSubmit(event)" novalidate>
+          <input type="text"  name="firstName" placeholder="First name"    required autocomplete="given-name">
+          <input type="email" name="email"     placeholder="Email address" required autocomplete="email">
+          <button type="submit" class="submit-btn">Notify Me</button>
+        </form>
+      </div>
+
       <p class="success" id="success-msg">You're on the list. &nbsp;See you soon.</p>
     </div>
 
@@ -506,35 +572,48 @@
       tick();
     })();
 
+    /* ── Show form on button click ── */
+    function showForm() {
+      const btn   = document.getElementById('cta-btn');
+      const panel = document.getElementById('form-reveal');
+      btn.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+      btn.style.opacity    = '0';
+      btn.style.transform  = 'translateY(-4px)';
+      setTimeout(() => {
+        btn.style.display = 'none';
+        panel.classList.add('open');
+        panel.querySelector('input').focus();
+      }, 260);
+    }
+
     /* ── Form submit → Google Sheets ── */
     const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyBa_3HczmwG9__RUshlGXxNkf8aOd_5bf1vB4gSL55bYuMy7IFzwbsmxqnIDeklnxqcg/exec';
 
     async function handleSubmit(e) {
       e.preventDefault();
-      const form  = document.getElementById('notify-form');
-      const msg   = document.getElementById('success-msg');
-      const btn   = form.querySelector('button');
-      const email = form.querySelector('input[type="email"]').value;
+      const form      = document.getElementById('notify-form');
+      const msg       = document.getElementById('success-msg');
+      const submitBtn = form.querySelector('.submit-btn');
+      const firstName = form.querySelector('input[name="firstName"]').value.trim();
+      const email     = form.querySelector('input[name="email"]').value.trim();
 
-      btn.textContent = '...';
-      btn.disabled    = true;
+      submitBtn.textContent = '...';
+      submitBtn.disabled    = true;
 
       try {
-        // no-cors: response is opaque but data still lands in the sheet
         await fetch(SHEET_URL, {
           method: 'POST',
           mode:   'no-cors',
-          body:   JSON.stringify({ email }),
+          body:   JSON.stringify({ firstName, email }),
         });
-      } catch (_) {
-        // network error — fail silently, still show confirmation
-      }
+      } catch (_) {}
 
-      form.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
-      form.style.opacity    = '0';
-      form.style.transform  = 'translateY(-6px)';
+      const panel = document.getElementById('form-reveal');
+      panel.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+      panel.style.opacity    = '0';
+      panel.style.transform  = 'translateY(-6px)';
       setTimeout(() => {
-        form.style.display  = 'none';
+        panel.style.display = 'none';
         msg.style.display   = 'block';
         msg.style.animation = 'fadeUp 0.6s ease both';
       }, 370);
